@@ -1,0 +1,30 @@
+<script setup lang="ts">
+import { useAuthStore } from '~/store/auth'
+
+definePageMeta({
+  layout: 'auth',
+  title: 'Log out',
+})
+const { logUserOut } = useAuthStore()
+const router = useRouter()
+const countDown = ref(3)
+onMounted(async () => {
+  logUserOut()
+  const timer = setInterval(() => {
+    countDown.value--
+    if (countDown.value === 0) {
+      clearInterval(timer)
+    }
+  }, 1000)
+  setTimeout(() => {
+    router.push('/auth/login')
+  }, 3000)
+})
+</script>
+<template>
+  <div class="my-auto text-center">
+    <Icon mode="svg" name="mdi:run-fast" class="mx-auto h-14 w-14" />
+    <h1 class="text-2xl">Logging out...</h1>
+    <span>Redirecting to login page in {{ countDown }} seconds</span>
+  </div>
+</template>
