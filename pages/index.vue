@@ -13,7 +13,7 @@ definePageMeta({
     <main class="flex-1 flex justify-center">
       <div class="bg-inner"></div>
       <div class="flex flex-col justify-center items-center gap-2 text-white">
-        <span>> _ <</span>
+        <span class="text-2xl">> _ <</span>
         <span>这里什么也没有</span>
       </div>
     </main>

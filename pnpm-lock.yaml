@@ -48,6 +48,9 @@ importers:
       '@iconify-json/mdi':
         specifier: ^1.2.1
         version: 1.2.1
+      '@internationalized/date':
+        specifier: ^3.5.6
+        version: 3.5.6
       '@nuxtjs/tailwindcss':
         specifier: ^6.12.2
         version: 6.12.2(magicast@0.3.5)(rollup@4.24.0)
@@ -81,6 +84,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.14)
+      tc-qrcode:
+        specifier: ^1.1.0
+        version: 1.1.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -3738,6 +3744,9 @@ packages:
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
+
+  tc-qrcode@1.1.0:
+    resolution: {integrity: sha512-wTLOP4sTvacw+YD6qFXH1HgpLvqQpqbJ+400RIUjW/GH0hqCSr06HxgsHn/P3ynmtITtS71Le6oBcpMxaGym5Q==}
 
   terser@5.36.0:
     resolution: {integrity: sha512-IYV9eNMuFAV4THUspIRXkLakHnV6XO7FEdtKjf/mDyrnqUg9LnlOn6/RwRvM9SZjR4GUq8Nk8zj67FzVARr74w==}
@@ -8255,6 +8264,8 @@ snapshots:
       minizlib: 2.1.2
       mkdirp: 1.0.4
       yallist: 4.0.0
+
+  tc-qrcode@1.1.0: {}
 
   terser@5.36.0:
     dependencies:

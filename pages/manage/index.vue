@@ -4,4 +4,8 @@ definePageMeta({
   middleware: 'auth',
 })
 </script>
-<template>No</template>
+<template>
+  <div class="flex gap-6">
+    <WechatGroupForm />
+  </div>
+</template>
