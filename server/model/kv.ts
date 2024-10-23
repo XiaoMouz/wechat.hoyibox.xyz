@@ -11,6 +11,11 @@ export async function setValue<T extends StorageValue>(key: string, value: T) {
   await storage.setItem(key, value)
 }
 
+export async function removeValue(key: string) {
+  const storage = useStorage('kv')
+  await storage.removeItem(key)
+}
+
 export async function haveValue(key: string) {
   const storage = useStorage('kv')
   const result = await storage.hasItem(key)

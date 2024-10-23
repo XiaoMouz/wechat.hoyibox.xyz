@@ -1,5 +1,7 @@
-import { haveValue, removeValue } from '~/server/model/kv'
 import { ensureAuth } from '~/server/utils/sercret'
+import { schema } from './index.post'
+import { haveValue } from '~/server/model/blob'
+import { setValue } from '~/server/model/kv'
 
 export default eventHandler(async (event) => {
   const auth = await ensureAuth(event)
@@ -19,7 +21,27 @@ export default eventHandler(async (event) => {
       error: 'Invalid ID',
     }
   }
+
+  const body = await readValidatedBody(event, schema.safeParse)
+
+  if (body.error || !body.data) {
+    setResponseStatus(event, 400, 'Bad Request')
+    return {
+      message: 'Failed',
+      error: body.error.message,
+    }
+  }
+
+  if (body.data.id !== id) {
+    setResponseStatus(event, 400, 'Bad Request')
+    return {
+      message: 'Failed',
+      error: 'ID not match',
+    }
+  }
+
   const exists = await haveValue(id)
+
   if (!exists) {
     setResponseStatus(event, 404, 'Not Found')
     return {
@@ -27,8 +49,9 @@ export default eventHandler(async (event) => {
       error: 'Not Found',
     }
   }
-  await removeValue(id)
+  setValue(id, body.data)
   return {
     message: 'Success',
+    data: body.data,
   }
 })

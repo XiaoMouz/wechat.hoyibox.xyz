@@ -11,9 +11,10 @@ export default eventHandler(async (event) => {
       error: 'Unauthorized',
     }
   }
-  const data = await getValue<WechatGroup>('groups')
+  const wechat = await getValue<WechatGroup>('groups')
+  
   return {
     message: 'OK',
-    data,
+    wechat,
   }
 })

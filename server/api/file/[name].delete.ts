@@ -1,4 +1,4 @@
-import { haveValue, removeValue } from '~/server/model/kv'
+import { removeItem } from '~/server/model/blob'
 import { ensureAuth } from '~/server/utils/sercret'
 
 export default eventHandler(async (event) => {
@@ -10,25 +10,18 @@ export default eventHandler(async (event) => {
       error: 'Unauthorized',
     }
   }
-
-  const id = event.context.params ? event.context.params.id : null
-  if (id === null) {
+  const name = event.context.params ? event.context.params.name : null
+  if (!name) {
     setResponseStatus(event, 400, 'Bad Request')
     return {
       message: 'Failed',
       error: 'Invalid ID',
     }
   }
-  const exists = await haveValue(id)
-  if (!exists) {
-    setResponseStatus(event, 404, 'Not Found')
-    return {
-      message: 'Failed',
-      error: 'Not Found',
-    }
-  }
-  await removeValue(id)
+  await removeItem(name).then(() => {
+    console.log('remove', name)
+  })
   return {
-    message: 'Success',
+    message: 'Done',
   }
 })
