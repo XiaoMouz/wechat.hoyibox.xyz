@@ -24,11 +24,9 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    authSecret:
-      process.env.AUTH_SECRET || Math.random().toString(36).substring(2),
-    rimoPasskey:
-      process.env.RIMO_PASSKEY || Math.random().toString(36).substring(2),
-    domain: process.env.DOMAIN || 'localhost:3000',
+    authSecret: Math.random().toString(36).substring(2),
+    rimoPasskey: Math.random().toString(36).substring(2),
+    domain: 'localhost:3000',
   },
   icon: {
     customCollections: [
