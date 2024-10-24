@@ -52,7 +52,7 @@
             </nuxt-link>
           </DropdownMenuGroup>
           <DropdownMenuGroup>
-            <nuxt-link to="/account">
+            <nuxt-link to="/settings">
               <DropdownMenuItem>
                 设置
                 <DropdownMenuShortcut>S</DropdownMenuShortcut>

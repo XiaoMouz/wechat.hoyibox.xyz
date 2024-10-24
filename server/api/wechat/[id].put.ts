@@ -1,7 +1,7 @@
 import { ensureAuth } from '~/server/utils/sercret'
 import { schema } from './index.post'
-import { haveValue } from '~/server/model/blob'
-import { setValue } from '~/server/model/kv'
+
+import { setValue, haveValue } from '~/server/model/kv'
 
 export default eventHandler(async (event) => {
   const auth = await ensureAuth(event)

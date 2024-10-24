@@ -22,6 +22,7 @@ const dialogInfo = defineModel<{
       <ScrollArea class="overflow-y-auto">
         <div class="flex flex-col justify-between">
           <WechatGroupForm
+            :group="dialogInfo.groups"
             v-model="dialogInfo.id"
             @close="dialogInfo.open = false"
             :submitFunction="dialogInfo.submitFunction"

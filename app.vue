@@ -43,4 +43,7 @@ onMounted(() => {
 </template>
 <style>
 @import '@/assets/css/shadcn.css';
+body {
+  overflow-x: hidden;
+} 
 </style>
