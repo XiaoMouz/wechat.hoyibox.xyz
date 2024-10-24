@@ -17,6 +17,10 @@ import { useToast } from '../ui/toast'
 import { useFileStore } from '~/store/file'
 import { useWechatStore } from '~/store/group'
 
+const { group } = defineProps<{
+  group?: WechatGroup
+}>()
+
 export interface UploadWindowType {
   decodeURL: string
   qrcodeURL: string
@@ -24,18 +28,32 @@ export interface UploadWindowType {
 
 const wechatGroupSchema = toTypedSchema(
   z.object({
-    id: z.string().default(getUUID()),
-    name: z.string().default(''),
-    description: z.string().optional().default(''),
-    enable: z.boolean().default(true),
+    id: z
+      .string()
+      .default(group ? (group.id ? group.id : getUUID()) : getUUID()),
+    name: z.string().default(group?.name || ''),
+    description: z
+      .string()
+      .optional()
+      .default(group?.description || ''),
+    enable: z.boolean().default(group?.enable || true),
     dueDate: z
       .number()
-      .default(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).getTime()),
-    updateAt: z.number().default(new Date().getTime()),
-    qrcode: z.string().optional().default(''),
-    link: z.string().optional().default(''),
-    direct: z.boolean().default(false),
-    accessNumber: z.number().default(0),
+      .default(
+        group?.dueDate ||
+          new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).getTime()
+      ),
+    updateAt: z.number().default(group?.updateAt || new Date().getTime()),
+    qrcode: z
+      .string()
+      .optional()
+      .default(group?.qrcode || ''),
+    link: z
+      .string()
+      .optional()
+      .default(group?.link || ''),
+    direct: z.boolean().default(group?.direct || false),
+    accessNumber: z.number().default(group?.accessNumber || 0),
   })
 )
 
@@ -202,8 +220,15 @@ onMounted(() => {
               </FormField>
               <div>
                 <UploadWindow
-                  @decoded="(v)=>setFieldValue('link',v)"
-                  @uploaded="(v)=>setFieldValue('qrcode',v)"
+                  @decoded="
+                    (v) => {
+                      setFieldValue('link', v)
+                      if (v !== values.link) {
+                        setFieldValue('accessNumber', 0)
+                      }
+                    }
+                  "
+                  @uploaded="(v) => setFieldValue('qrcode', v)"
                   :id="values.id"
                   v-model="imageInfo"
                 />

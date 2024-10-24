@@ -6,6 +6,14 @@ definePageMeta({
 </script>
 <template>
   <div class="flex gap-6">
-    <WechatGroupForm />
+    <WechatTables />
+    <Dialog>
+      <DialogTrigger as-child>
+        <Button variant="outline"> Edit Profile </Button>
+      </DialogTrigger>
+      <DialogContent class="md:min-w-[645px]">
+        <WechatGroupForm />
+      </DialogContent>
+    </Dialog>
   </div>
 </template>
