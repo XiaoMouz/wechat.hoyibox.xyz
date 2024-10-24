@@ -234,7 +234,24 @@ onMounted(() => {
               </ClientOnly>
             </fieldset>
             <fieldset class="grid w-full gap-6 rounded-lg border p-4">
-              <legend class="-ml-1 px-1 text-sm font-medium">二维码</legend>
+              <legend
+                class="-ml-1 px-1 text-sm font-medium flex flex-row items-center gap-1"
+              >
+                二维码<HoverCard>
+                  <HoverCardTrigger as-child>
+                    <Button class="p-0" variant="link"
+                      ><Icon name="mdi:information"
+                    /></Button>
+                  </HoverCardTrigger>
+                  <HoverCardContent class="w-80">
+                    <div class="flex justify-between space-x-4">
+                      <p class="text-sm">
+                        二维码不手动设置，上传带二维码的图片即可，务必要是微信邀请群的二维码，再不济也要上传个内容是链接的二维码
+                      </p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              </legend>
               <FormField v-slot="{ componentField }" name="link">
                 <FormItem>
                   <FormLabel>跳转链接</FormLabel>

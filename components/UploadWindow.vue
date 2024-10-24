@@ -45,7 +45,7 @@ import qrcode from 'tc-qrcode'
 
 const { toast } = useToast()
 
-const message = ref('点击或拖拽文件上传')
+const message = ref('点击或拖拽上传')
 const isUploading = ref(false)
 const fileInput = ref<VNodeRef | null>(null)
 const progress = ref(0)

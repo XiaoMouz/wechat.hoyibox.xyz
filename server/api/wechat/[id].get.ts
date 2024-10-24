@@ -1,4 +1,4 @@
-import { getValue } from '~/server/model/kv'
+import { getValue, setValue } from '~/server/model/kv'
 import { WechatGroup } from '~/types/wechat-group.type'
 
 export default defineEventHandler(async (event) => {
@@ -17,6 +17,13 @@ export default defineEventHandler(async (event) => {
       message: 'Failed',
       error: 'No data available - empty result',
     }
+  }
+
+  // if header have 'X-Visit' then data.accessNumber++ and setValue
+  const visit = getHeader(event, 'X-Visit')
+  if (visit) {
+    data.accessNumber++
+    await setValue(id, data)
   }
   return {
     message: 'OK',

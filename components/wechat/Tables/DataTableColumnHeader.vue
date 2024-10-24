@@ -59,14 +59,14 @@ export default {
             name="mdi:arrow-up"
             class="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
           />
-          Asc
+          升序
         </DropdownMenuItem>
         <DropdownMenuItem @click="column.toggleSorting(true)">
           <Icon
             name="mdi:arrow-down"
             class="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
           />
-          Desc
+          降序
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem @click="column.toggleVisibility(false)">
@@ -74,7 +74,7 @@ export default {
             name="mdi:eye-off-outline"
             class="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
           />
-          Hide
+          隐藏
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

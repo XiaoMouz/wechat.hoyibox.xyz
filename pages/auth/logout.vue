@@ -5,6 +5,17 @@ definePageMeta({
   layout: 'auth',
   title: 'Log out',
 })
+
+useHead({
+  title: '下海咯',
+  meta: [
+    {
+      name: 'description',
+      content: '登出',
+    },
+  ],
+})
+
 const { logUserOut } = useAuthStore()
 const router = useRouter()
 const countDown = ref(3)
@@ -24,7 +35,7 @@ onMounted(async () => {
 <template>
   <div class="my-auto text-center">
     <Icon mode="svg" name="mdi:run-fast" class="mx-auto h-14 w-14" />
-    <h1 class="text-2xl">Logging out...</h1>
-    <span>Redirecting to login page in {{ countDown }} seconds</span>
+    <h1 class="text-2xl">咕噜咕噜咕噜</h1>
+    <span>你已经下海啦，距离回到登陆地还有 {{ countDown }} 秒</span>
   </div>
 </template>

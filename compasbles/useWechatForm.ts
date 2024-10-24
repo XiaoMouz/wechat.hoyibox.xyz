@@ -40,21 +40,3 @@ export const useWechatForm = () => {
   const model = state
   return { edit, create, model }
 }
-
-export const useWechatQRCodeDialog = () => {
-  const state = useState('wechatQRCode', () => {
-    const dialogInfo: {
-      open: boolean
-      id: string
-    } = {
-      open: false,
-      id: getUUID(),
-    }
-    return dialogInfo
-  })
-  const open = (id: string) => {
-    state.value = { open: true, id: id }
-  }
-  const model = state
-  return { open, model }
-}

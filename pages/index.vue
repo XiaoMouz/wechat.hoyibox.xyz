@@ -1,8 +1,17 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'Wechat QRCode',
-  middleware: 'auth',
+  title: '你好呀，我是海猫',
   layout: 'blank',
+})
+
+useHead({
+  title: '你好呀，我是海猫',
+  meta: [
+    {
+      name: 'description',
+      content: '这里什么也没有？或许吧',
+    },
+  ],
 })
 </script>
 <template>

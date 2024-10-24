@@ -15,7 +15,16 @@ const { toast } = useToast()
 definePageMeta({
   layout: 'auth',
   auth: {},
-  title: '登录到',
+})
+
+useHead({
+  title: '喵喵喵上岸了',
+  meta: [
+    {
+      name: 'description',
+      content: '登录',
+    },
+  ],
 })
 
 const pending = ref(false)
@@ -52,7 +61,7 @@ async function onSubmit(values: Record<string, any>) {
   <div class="my-auto min-w-[340px] space-y-6" :class="pending ? 'blur' : ''">
     <Card>
       <CardHeader>
-        <CardTitle>登录</CardTitle>
+        <CardTitle>登录到 <code>海猫岛</code> </CardTitle>
       </CardHeader>
       <CardContent>
         <AutoForm
@@ -75,3 +84,18 @@ async function onSubmit(values: Record<string, any>) {
   </div>
   <LoadingCycle v-if="pending" sizeClass="w-6 h-6" layoutClass="fixed" />
 </template>
+<style scoped>
+.text-gradient {
+  position: relative;
+}
+
+.text-gradient[data-text]::after {
+  content: attr(data-text);
+  color: cyan;
+  position: absolute;
+  top: 0;
+  left: 0;
+  mask-image: linear-gradient(to left, red, rgba(0, 0, 0, 0.5));
+  -webkit-mask-image: linear-gradient(to left, red, rgba(0, 0, 0, 0.5));
+}
+</style>
