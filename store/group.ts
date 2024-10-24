@@ -8,49 +8,55 @@ export const useWechatStore = defineStore('wechat', {
   actions: {
     async fetchGroups() {
       // useFetch from nuxt 3
-      const { data, status } = await useFetch<{
+      const { groups } = await $fetch<{
         groups: WechatGroup[]
       }>('/api/wechat/', {
         method: 'get',
       })
-      this.groups = data.value?.groups || []
+      this.groups = groups || []
     },
-    async deleteGroup(id: string) {
+    async deleteGroup(id: string): Promise<boolean> {
       // useFetch from nuxt 3
-      const { data, status } = await useFetch<{
+      const { message } = await $fetch<{
         message: string
       }>(`/api/wechat/${id}`, {
         method: 'delete',
       })
-      if (status.value === 'success') {
+      if (message) {
         this.groups = this.groups.filter((group) => group.id !== id)
+        return true
       }
+      return false
     },
-    async createGroup(group: WechatGroup) {
+    async createGroup(group: WechatGroup): Promise<boolean> {
       // useFetch from nuxt 3
-      const { data, status } = await useFetch<{
+      const { message } = await $fetch<{
         message: string
-      }>(`/api/wechat/${group.id}`, {
+      }>(`/api/wechat/`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: group,
       })
-      if (status.value === 'success') {
+      if (message) {
         this.groups.push(group)
+        return true
       }
+      return false
     },
-    async updateGroup(group: WechatGroup) {
+    async updateGroup(group: WechatGroup): Promise<boolean> {
       // useFetch from nuxt 3
-      const { data, status } = await useFetch<{
+      const { message } = await $fetch<{
         message: string
       }>(`/api/wechat/${group.id}`, {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: group,
       })
-      if (status.value === 'success') {
+      if (message) {
         this.groups = this.groups.map((g) => (g.id === group.id ? group : g))
+        return true
       }
+      return false
     },
   },
 })

@@ -17,21 +17,31 @@ import { useToast } from '../ui/toast'
 import { useFileStore } from '~/store/file'
 import { useWechatStore } from '~/store/group'
 
-const { group } = defineProps<{
+const { group, submitFunction } = defineProps<{
   group?: WechatGroup
+  submitFunction: undefined | ((values: WechatGroup) => Promise<boolean>)
 }>()
+
+const emit = defineEmits<{
+  submit: [values: () => void]
+  close: [values: WechatGroup]
+}>()
+
+const { toast } = useToast()
 
 export interface UploadWindowType {
   decodeURL: string
   qrcodeURL: string
 }
 
+const model = defineModel()
+
 const wechatGroupSchema = toTypedSchema(
   z.object({
     id: z
       .string()
       .default(group ? (group.id ? group.id : getUUID()) : getUUID()),
-    name: z.string().default(group?.name || ''),
+    name: z.string(),
     description: z
       .string()
       .optional()
@@ -78,14 +88,37 @@ const placeholder = ref()
 const df = new DateFormatter('zh-CN', {
   dateStyle: 'long',
 })
-const onSubmit = form.handleSubmit((values) => {
-  console.log('Form submitted!', values)
+
+const uploading = ref(false)
+
+const onSubmit = form.handleSubmit(async (values) => {
+  if (!submitFunction || submitFunction.name === 'undefined') {
+    toast({
+      title: '提交失败',
+      description: '没有提交函数,刷新页面重试',
+      variant: 'destructive',
+    })
+    return
+  }
+  uploading.value = true
+  const res = await submitFunction(values)
+  if (res) {
+    toast({
+      title: '提交成功',
+    })
+    emit('close', values)
+  } else {
+    toast({
+      title: '提交失败',
+      variant: 'destructive',
+    })
+  }
 })
 
-const imageInfo = ref<UploadWindowType>({
-  decodeURL: '',
-  qrcodeURL: '',
-})
+if (group) {
+  setFieldValue('name', group.name)
+}
+model.value = values.id
 
 onMounted(() => {
   fetchFiles()
@@ -97,7 +130,7 @@ onMounted(() => {
       <form @submit="onSubmit" class="flex flex-col gap-8">
         <div class="flex flex-col gap-4 md:gap-6">
           <div class="flex flex-col md:flex-row gap-4 md:gap-6">
-            <fieldset class="grid gap-6 rounded-lg border p-4">
+            <fieldset class="grid w-full gap-6 rounded-lg border p-4">
               <legend class="-ml-1 px-1 text-sm font-medium">信息</legend>
               <FormField v-slot="{ componentField }" name="name">
                 <FormItem>
@@ -200,7 +233,7 @@ onMounted(() => {
                 </FormField>
               </ClientOnly>
             </fieldset>
-            <fieldset class="grid gap-6 rounded-lg border p-4">
+            <fieldset class="grid w-full gap-6 rounded-lg border p-4">
               <legend class="-ml-1 px-1 text-sm font-medium">二维码</legend>
               <FormField v-slot="{ componentField }" name="link">
                 <FormItem>
@@ -230,7 +263,6 @@ onMounted(() => {
                   "
                   @uploaded="(v) => setFieldValue('qrcode', v)"
                   :id="values.id"
-                  v-model="imageInfo"
                 />
               </div>
               <FormField v-slot="{ componentField }" name="accessNumber">
@@ -261,7 +293,10 @@ onMounted(() => {
         </div>
 
         <div>
-          <Button type="submit"> 提交 </Button>
+          <Button :disabled="uploading" type="submit">
+            <span v-if="!uploading">提交</span>
+            <LoadingCycle v-else />
+          </Button>
         </div>
       </form>
     </div>

@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { getValue } from '~/server/model/kv'
 import { WechatGroup } from '~/types/wechat-group.type'
 
@@ -12,14 +13,23 @@ export default defineEventHandler(async (event) => {
   }
   const storage = useStorage('kv')
   const list = await storage.getKeys()
+  const schema = z.object({
+    offset: z.number().optional(),
+  })
+  const { data, error } = await getValidatedQuery(event, schema.safeParse)
+  if (error) {
+    setResponseStatus(event, 400, 'Bad Request')
+    return {
+      message: 'Failed',
+      error: 'Invalid query',
+    }
+  }
+  const offset = data?.offset || 0
 
-  // get top 10 keys value
   const groups = await Promise.all(
-    list.slice(0, 10).map(async (key) => {
-      return {
-        key,
-        value: await storage.getItem<WechatGroup>(key),
-      }
+    list.map(async (key) => {
+      const data = await getValue<WechatGroup>(key)
+      return data
     })
   )
 

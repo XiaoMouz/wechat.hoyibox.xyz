@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser({ password }: UserPayloadInterface) {
       // useFetch from nuxt 3
-      const { data, status } = await useFetch<{
+      const { token, expiresIn, user } = await $fetch<{
         token: string
         expiresIn: number
         user: { username: string; picture: string }
@@ -23,11 +23,10 @@ export const useAuthStore = defineStore('auth', {
           password,
         },
       })
-      this.loading = status.value === 'pending'
 
-      if (data.value) {
-        const token = useCookie('auth.token')
-        token.value = data?.value?.token
+      if (token) {
+        const ctoken = useCookie('auth.token')
+        ctoken.value = token
         this.authenticated = true
       }
     },
