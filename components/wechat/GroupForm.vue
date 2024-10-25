@@ -6,6 +6,9 @@ import {
   DateFormatter,
   getLocalTimeZone,
   parseDate,
+  parseDateTime,
+  parseTime,
+  parseZonedDateTime,
   today,
   type DateValue,
 } from '@internationalized/date'
@@ -76,10 +79,14 @@ const { handleSubmit, setFieldValue, values } = form
 const { files, fetchFiles } = useFileStore()
 
 const value = computed({
-  get: () =>
-    values.dueDate
-      ? parseDate(new Date(values.dueDate).toISOString().split('T')[0])
-      : undefined,
+  get: () => {
+    return values.dueDate
+      ? parseZonedDateTime(
+          new Date(values.dueDate).toISOString().split('Z')[0] +
+            `[${getLocalTimeZone()}]`
+        )
+      : undefined
+  },
   set: (val) => val,
 })
 
@@ -186,7 +193,9 @@ onMounted(() => {
                           "
                         >
                           <span>{{
-                            value ? df.format(toDate(value)) : '选择一个日期'
+                            value
+                              ? df.format(toDate(value, getLocalTimeZone()))
+                              : '选择一个日期'
                           }}</span>
                           <Icon
                             name="mdi:calendar-month"
@@ -204,17 +213,25 @@ onMounted(() => {
                         initial-focus
                         :min-value="today(getLocalTimeZone())"
                         @update:model-value="
-                      (v:any) => {
-                        if (v) {
-                          setFieldValue(
-                            'dueDate',
-                            v.toDate('Asia/ShangHai').getTime()
-                          )
-                        } else {
-                          setFieldValue('dueDate', undefined)
-                        }
-                      }
-                    "
+                          (v) => {
+                            if (v) {
+                              console.log(
+                                v.toDate(getLocalTimeZone()).getTime()
+                              )
+                              setFieldValue(
+                                'dueDate',
+                                v.toDate(getLocalTimeZone()).getTime() -
+                                  v
+                                    .toDate(getLocalTimeZone())
+                                    .getTimezoneOffset() *
+                                    60 *
+                                    1000
+                              )
+                            } else {
+                              setFieldValue('dueDate', undefined)
+                            }
+                          }
+                        "
                       />
                     </PopoverContent>
                   </Popover>

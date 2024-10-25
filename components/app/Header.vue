@@ -1,6 +1,6 @@
 <template>
   <header
-    class="w-full flex flex-nowrap justify-between items-center pt-5 pl-10 pr-20"
+    class="w-full flex flex-nowrap justify-between items-center pt-5 pl-10 pr-10"
   >
     <div>
       <nuxt-link to="/">
