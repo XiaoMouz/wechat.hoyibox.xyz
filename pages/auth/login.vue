@@ -41,8 +41,30 @@ const schema = z.object({
 async function onSubmit(values: Record<string, any>) {
   pending.value = true
   const { password } = schema.parse(values)
-  await authenticateUser({ password })
-  if (authenticated.value) {
+  const { token, expiresIn, user, message } = await $fetch<{
+    token: string
+    message?: string
+    expiresIn: number
+    user: { username: string; picture: string }
+  }>('/api/auth/login', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: {
+      password,
+    },
+  }).catch((e) => {
+    console.error(e)
+    return {
+      token: null,
+      expiresIn: 0,
+      user: { username: '', picture: '' },
+      message: 'error',
+    }
+  })
+
+  if (token) {
+    const ctoken = useCookie('auth.token')
+    ctoken.value = token
     toast({
       title: '好耶',
       description: '登录成功',
