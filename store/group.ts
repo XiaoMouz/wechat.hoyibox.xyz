@@ -49,7 +49,7 @@ export const useWechatStore = defineStore('wechat', {
       return false
     },
     async updateGroup(group: WechatGroup): Promise<boolean> {
-      // useFetch from nuxt 3
+      group.updateAt = new Date().getTime()
       const { message } = await $fetch<{
         message: string
       }>(`/api/wechat/${group.id}`, {
