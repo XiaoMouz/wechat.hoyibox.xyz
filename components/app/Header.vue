@@ -79,8 +79,8 @@
   </header>
 </template>
 <script setup lang="ts">
-import { useAuthStore } from '~/store/auth'
-const { authenticated } = storeToRefs(useAuthStore())
+const token = useCookie('auth.token')
+const authenticated = computed(() => !!token.value)
 
 const isDark = useDark()
 </script>

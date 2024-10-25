@@ -28,6 +28,8 @@ export const useAuthStore = defineStore('auth', {
         const ctoken = useCookie('auth.token')
         ctoken.value = token
         this.authenticated = true
+      } else {
+        this.authenticated = false
       }
     },
     logUserOut() {

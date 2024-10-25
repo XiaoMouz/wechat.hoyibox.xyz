@@ -29,8 +29,13 @@ const data = body.value?.data
 
 const { toast } = useToast()
 
-if (!data || error.value?.status !== 200) {
-  router.push('/404')
+if (!data) {
+  toast({
+    title: '未找到',
+    description: '这个群可能已经被删除了',
+    variant: 'destructive',
+  })
+  router.push('/')
 }
 
 if (data && data?.direct && data?.link) {
@@ -48,11 +53,6 @@ function jumpToWechat() {
     window.location.replace(data.link)
   }
 }
-toast({
-  title: '未找到',
-  description: '这个群可能已经被删除了',
-  variant: 'destructive',
-})
 </script>
 
 <template>

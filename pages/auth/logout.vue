@@ -21,6 +21,8 @@ const router = useRouter()
 const countDown = ref(3)
 onMounted(async () => {
   logUserOut()
+  const token = useCookie('auth.token')
+  token.value = null
   const timer = setInterval(() => {
     countDown.value--
     if (countDown.value === 0) {
