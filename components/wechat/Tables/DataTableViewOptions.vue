@@ -58,9 +58,9 @@ function toChinese(column: string) {
       <Button
         variant="outline"
         size="sm"
-        class="h-8 ml-auto md:flex md:justify-center md:gap-2"
+        class="ml-auto items-center md:flex md:justify-center md:gap-1"
       >
-        <Icon name="mdi:tune-variant" class="w-4 h-4" />
+        <Icon name="mdi:tune-variant" class="size-4" />
         <span class="hidden md:flex">列筛选</span>
       </Button>
     </DropdownMenuTrigger>

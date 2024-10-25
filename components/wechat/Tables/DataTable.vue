@@ -98,14 +98,23 @@ const table = useVueTable({
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex items-center gap-2">
-      <div class="flex flex-row gap-1">
+      <div class="flex flex-row items-center gap-2">
         <Input
-          class="max-w-sm"
+          class="max-w-sm h-9"
+          size="sm"
           placeholder="查找..."
           :model-value="table.getColumn('name')?.getFilterValue() as string"
           @update:model-value="table.getColumn('name')?.setFilterValue($event)"
         />
-        <Button @click="create(createGroup)" variant="default"> 新建 </Button>
+        <Button
+          size="sm"
+          class="md:flex md:justify-center items-center md:gap-1"
+          @click="create(createGroup)"
+          variant="default"
+        >
+          <Icon class="size-4" name="mdi:plus" />
+          <span class="hidden md:flex">新建</span>
+        </Button>
       </div>
 
       <WechatTablesDataTableViewOptions :table="table" />

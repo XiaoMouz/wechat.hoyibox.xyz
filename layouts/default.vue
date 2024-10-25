@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen min-h-screen flex flex-col">
+  <div class="w-screen min-h-screen flex flex-col gap-4">
     <AppHeader />
     <main class="flex-1 flex justify-center">
       <slot />

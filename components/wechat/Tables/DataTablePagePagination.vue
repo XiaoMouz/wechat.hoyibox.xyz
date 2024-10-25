@@ -19,13 +19,15 @@ defineProps<DataTablePaginationProps>()
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row items-center justify-between px-2">
+  <div
+    class="flex flex-col gap-2 md:flex-row items-center justify-between px-2"
+  >
     <div class="flex-1 text-sm text-muted-foreground">
       已选中
       {{ table.getFilteredSelectedRowModel().rows.length }} 行，共
       {{ table.getFilteredRowModel().rows.length }} 行
     </div>
-    <div class="flex items-center space-x-6 lg:space-x-8">
+    <div class="flex items-center gap-2 md:gap-6 lg:gap-8">
       <div class="flex items-center space-x-2">
         <p class="text-sm font-medium">每页</p>
         <Select
@@ -57,7 +59,7 @@ defineProps<DataTablePaginationProps>()
         }}
         页
       </div>
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center gap-2">
         <Button
           variant="outline"
           class="hidden w-8 h-8 p-0 md:flex"

@@ -138,7 +138,11 @@ onMounted(() => {
         <div class="flex flex-col gap-4 md:gap-6">
           <div class="flex flex-col md:flex-row gap-4 md:gap-6">
             <fieldset class="grid w-full gap-6 rounded-lg border p-4">
-              <legend class="-ml-1 px-1 text-sm font-medium flex">信息</legend>
+              <legend
+                class="-ml-1 px-1 text-sm font-medium flex flex-row items-center gap-1"
+              >
+                <Icon name="mdi:document" /> <span>信息</span>
+              </legend>
               <FormField v-slot="{ componentField }" name="name">
                 <FormItem>
                   <FormLabel>名称</FormLabel>
@@ -254,16 +258,17 @@ onMounted(() => {
               <legend
                 class="-ml-1 px-1 text-sm font-medium flex flex-row items-center gap-1"
               >
-                二维码<HoverCard>
+                <Icon name="mdi:qrcode" /><span>二维码</span
+                ><HoverCard>
                   <HoverCardTrigger as-child>
-                    <Button class="p-0" variant="link"
+                    <Button class="p-0 ml-1" variant="link"
                       ><Icon name="mdi:information"
                     /></Button>
                   </HoverCardTrigger>
                   <HoverCardContent class="w-80">
                     <div class="flex justify-between space-x-4">
                       <p class="text-sm">
-                        二维码不手动设置，上传带二维码的图片即可，务必要是微信邀请群的二维码，再不济也要上传个内容是链接的二维码
+                        二维码不需要手动设置，上传带二维码的图片即可，最好是微信邀请群的二维码，再不济也要上传个内容是链接的二维码
                       </p>
                     </div>
                   </HoverCardContent>
@@ -312,8 +317,10 @@ onMounted(() => {
             </fieldset>
           </div>
           <fieldset class="grid gap-6 rounded-lg border p-4">
-            <legend class="-ml-1 px-1 text-sm font-medium flex">
-              附加信息
+            <legend
+              class="-ml-1 px-1 text-sm font-medium flex flex-row items-center gap-1"
+            >
+              <Icon name="mdi:card-bulleted-outline" /><span>附加信息</span>
             </legend>
             <FormField v-slot="{ componentField }" name="description">
               <FormItem>

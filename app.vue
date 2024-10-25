@@ -45,5 +45,30 @@ onMounted(() => {
 @import '@/assets/css/shadcn.css';
 body {
   overflow-x: hidden;
-} 
+}
+
+body::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: rgb(179, 177, 177);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgb(136, 136, 136);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: rgb(100, 100, 100);
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background: rgb(68, 68, 68);
+  border-radius: 10px;
+}
 </style>

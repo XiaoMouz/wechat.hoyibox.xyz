@@ -56,6 +56,14 @@ function jumpToWechat() {
     window.location.replace(data.link)
   }
 }
+
+function copyURL() {
+  navigator.clipboard.writeText(`https://${location.host}/wechat/${id}`)
+  toast({
+    title: '已复制',
+    description: '链接已经复制到剪贴板',
+  })
+}
 </script>
 
 <template>
@@ -100,9 +108,9 @@ function jumpToWechat() {
             </CardDescription></CardHeader
           >
           <CardContent
-            class="flex flex-row flex-auto w-full gap-4 items-center"
+            class="flex flex-row flex-auto w-full gap-2 items-center"
           >
-            <Button :disabled="loading" @click="jumpToWechat"
+            <Button :disabled="loading" variant="default" @click="jumpToWechat"
               ><div v-if="!loading" class="flex gap-1 items-center">
                 <Icon name="mdi:exit-run" class="size-4" />火速入场
               </div>
@@ -110,7 +118,8 @@ function jumpToWechat() {
                 <LoadingCycle /> 正在跳转
               </div>
             </Button>
-            <span>或者</span
+            <span class="text-2xl cursor-default select-none"
+              >&nbsp;&nbsp;&nbsp;/</span
             ><Dialog>
               <DialogTrigger as-child>
                 <Button
@@ -140,7 +149,15 @@ function jumpToWechat() {
             </Dialog>
           </CardContent>
           <CardFooter>
-            <code class="text-sm">Tracker ID: {{ data?.id }}</code>
+            <span class="text-sm flex flex-row"
+              >Tracker ID:&nbsp;
+              <code
+                @click="copyURL"
+                class="cursor-pointer border-2 px-1 rounded-lg shadow-lg flex flex-row items-center gap-1"
+              >
+                <Icon name="mdi:link-variant" /> {{ id }}</code
+              >
+            </span>
           </CardFooter>
         </Card>
       </div>
