@@ -138,7 +138,7 @@ onMounted(() => {
         <div class="flex flex-col gap-4 md:gap-6">
           <div class="flex flex-col md:flex-row gap-4 md:gap-6">
             <fieldset class="grid w-full gap-6 rounded-lg border p-4">
-              <legend class="-ml-1 px-1 text-sm font-medium">信息</legend>
+              <legend class="-ml-1 px-1 text-sm font-medium flex">信息</legend>
               <FormField v-slot="{ componentField }" name="name">
                 <FormItem>
                   <FormLabel>名称</FormLabel>
@@ -312,7 +312,9 @@ onMounted(() => {
             </fieldset>
           </div>
           <fieldset class="grid gap-6 rounded-lg border p-4">
-            <legend class="-ml-1 px-1 text-sm font-medium">附加信息</legend>
+            <legend class="-ml-1 px-1 text-sm font-medium flex">
+              附加信息
+            </legend>
             <FormField v-slot="{ componentField }" name="description">
               <FormItem>
                 <FormLabel>描述</FormLabel>
