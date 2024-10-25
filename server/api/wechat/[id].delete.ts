@@ -1,3 +1,4 @@
+import { removeItem } from '~/server/model/blob'
 import { haveValue, removeValue } from '~/server/model/kv'
 import { ensureAuth } from '~/server/utils/sercret'
 
@@ -28,6 +29,8 @@ export default eventHandler(async (event) => {
     }
   }
   await removeValue(id)
+
+  await removeItem(id)
   return {
     message: 'Success',
   }

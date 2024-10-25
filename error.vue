@@ -1,4 +1,5 @@
 <template>
+  <Toaster />
   <div class="w-screen min-h-screen flex flex-col">
     <main
       class="mx-auto my-auto flex flex-col items-center gap-4 justify-center"

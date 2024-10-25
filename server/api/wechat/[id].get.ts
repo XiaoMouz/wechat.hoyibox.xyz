@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     }
   }
   const data = await getValue<WechatGroup>(id)
-  if (!data) {
+  if (!data || data.enable === false) {
     setResponseStatus(event, 404, 'Not Found')
     return {
       message: 'Failed',

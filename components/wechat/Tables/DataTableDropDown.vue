@@ -108,11 +108,10 @@ onMounted(() => {})
             查看原始数据
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DialogTrigger asChild>
-            <DropdownMenuItem
-              ><span class="text-red-500">删除</span></DropdownMenuItem
-            >
-          </DialogTrigger>
+
+          <DropdownMenuItem @click="dialogStatus = true"
+            ><span class="text-red-500">删除</span></DropdownMenuItem
+          >
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogContent>
