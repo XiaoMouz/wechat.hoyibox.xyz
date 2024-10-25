@@ -111,8 +111,8 @@ function copyURL() {
                       </div>
                     </div>
                   </div>
-                </HoverCardContent> </HoverCard
-              >
+                </HoverCardContent>
+              </HoverCard>
             </CardDescription></CardHeader
           >
           <CardContent class="flex flex-col flex-auto w-full gap-8">

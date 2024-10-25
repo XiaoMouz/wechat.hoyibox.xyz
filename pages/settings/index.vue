@@ -12,6 +12,10 @@ useHead({
     },
   ],
 })
+
+preloadRouteComponents('/manage')
+preloadRouteComponents('/login')
+preloadRouteComponents('/logout')
 </script>
 <template>
   <div class="my-auto text-center">
