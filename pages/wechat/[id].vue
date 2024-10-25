@@ -85,10 +85,10 @@ function copyURL() {
           ><CardHeader class="text-2xl font-bold">
             <CardTitle class="flex items-center gap-2"
               ><Icon name="mdi:navigation-variant-outline" class="size-8"></Icon
-              >邀请</CardTitle
+              >你好呀</CardTitle
             >
             <CardDescription
-              >邀请您加入
+              >邀请你进入
               <HoverCard>
                 <HoverCardTrigger as-child>
                   <Button variant="link">{{ data?.name }} </Button>
@@ -112,7 +112,7 @@ function copyURL() {
                     </div>
                   </div>
                 </HoverCardContent> </HoverCard
-              >微信群聊
+              >
             </CardDescription></CardHeader
           >
           <CardContent class="flex flex-col flex-auto w-full gap-8">
