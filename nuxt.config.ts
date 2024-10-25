@@ -39,12 +39,16 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       kv: {
-        driver: 'cloudflare-kv-binding',
-        binding: 'KV_STORAGE',
+        driver: 'netlifyBlobs',
+        name: 'kv',
+        siteID: process.env.NETLIFY_SITE_ID,
+        token: process.env.NETLIFY_TOKEN,
       },
       blob: {
-        driver: 'cloudflareR2Binding',
-        binding: 'FILE_BLOB',
+        driver: 'netlifyBlobs',
+        name: 'blob',
+        siteID: process.env.NETLIFY_SITE_ID,
+        token: process.env.NETLIFY_TOKEN,
       },
     },
     devStorage: {
