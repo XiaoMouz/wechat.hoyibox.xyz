@@ -46,8 +46,8 @@ const loading = ref(false)
 
 function jumpToWechat() {
   toast({
-    title: '正在跳转至微信',
-    description: '速度取决于您与微信的网络环境，坐和放宽~',
+    title: '正在跳转至链接',
+    description: '速度取决于您与远端的网络环境，坐和放宽~',
   })
   if (data?.link) {
     window.location.replace(data.link)

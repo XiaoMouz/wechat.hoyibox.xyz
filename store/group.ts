@@ -6,14 +6,22 @@ export const useWechatStore = defineStore('wechat', {
     groups: ref<WechatGroup[]>([]),
   }),
   actions: {
-    async fetchGroups() {
+    async fetchGroups(): Promise<boolean> {
       // useFetch from nuxt 3
-      const { groups } = await $fetch<{
+      const { groups, message } = await $fetch<{
         groups: WechatGroup[]
+        message?: string
       }>('/api/wechat/', {
         method: 'get',
+      }).catch((e) => {
+        console.error(e)
+        return { groups: [], message: 'error' }
       })
+      if (message) {
+        return false
+      }
       this.groups = groups || []
+      return true
     },
     async deleteGroup(id: string): Promise<boolean> {
       // useFetch from nuxt 3

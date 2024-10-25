@@ -2,6 +2,7 @@
 import { boolean } from 'zod'
 import { useWechatForm } from '~/compasbles/useWechatForm'
 import { ScrollArea } from '~/components/ui/scroll-area'
+import { useToast } from '~/components/ui/toast'
 import { columns } from '~/components/wechat/Tables/columns'
 import { useWechatStore } from '~/store/group'
 import type { WechatGroup } from '~/types/wechat-group.type'
@@ -20,10 +21,18 @@ useHead({
     },
   ],
 })
+const { toast } = useToast()
 
 const { createGroup, fetchGroups, deleteGroup, updateGroup } = useWechatStore()
 const store = useWechatStore()
-fetchGroups()
+const res = await fetchGroups()
+if (!res) {
+  toast({
+    title: '获取数据失败',
+    description: '请刷新页面',
+    variant: 'destructive',
+  })
+}
 const { create, edit, model } = useWechatForm()
 
 const groups = computed(() => store.groups)
