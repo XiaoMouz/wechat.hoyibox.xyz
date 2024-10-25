@@ -17,7 +17,7 @@ export const useWechatStore = defineStore('wechat', {
         console.error(e)
         return { groups: [], message: 'error' }
       })
-      if (message) {
+      if (message !== 'OK') {
         return false
       }
       this.groups = groups || []
