@@ -40,7 +40,19 @@ const { create, edit, model } = useWechatForm()
 const groups = computed(() => store.groups)
 </script>
 <template>
-  <div class="flex gap-6 max-w-[90dvw]">
+  <div class="flex flex-col gap-6 max-w-[90dvw]">
+    <Alert>
+      <AlertTitle class="flex flex-row gap-2 items-center">
+        <Icon
+          name="mdi:alert-octagon-outline"
+          class="size-5"
+        />提请注意</AlertTitle
+      >
+      <AlertDescription>
+        因微信机制原因，所有群组邀请只能通过扫码加入，不支持直接跳转，因此无感模式对于微信无效
+      </AlertDescription>
+    </Alert>
+
     <WechatDialogForm v-model="model" />
     <ScrollArea>
       <WechatTablesDataTable :columns="columns" :data="groups"

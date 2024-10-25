@@ -41,7 +41,15 @@ if (!data) {
   router.push('/')
 }
 
-if (data && data?.direct && data?.link) {
+const isWechat = computed(() => {
+  return data?.link?.includes('https://weixin.qq.com/g/')
+})
+
+const jumping = computed(() => {
+  return data?.direct && data?.link && !isWechat.value
+})
+
+if (data && data?.direct && data?.link && !isWechat.value) {
   jumpToWechat()
 }
 
@@ -69,7 +77,7 @@ function copyURL() {
 <template>
   <ClientOnly>
     <div
-      v-if="!data?.direct"
+      v-if="!jumping"
       class="flex flex-col items-center justify-center gap-6"
     >
       <div class="flex flex-col gap-6">
@@ -107,46 +115,60 @@ function copyURL() {
               >微信群聊
             </CardDescription></CardHeader
           >
-          <CardContent
-            class="flex flex-row flex-auto w-full gap-2 items-center"
-          >
-            <Button :disabled="loading" variant="default" @click="jumpToWechat"
-              ><div v-if="!loading" class="flex gap-1 items-center">
-                <Icon name="mdi:exit-run" class="size-4" />火速入场
-              </div>
-              <div v-else class="flex gap-1 items-center">
-                <LoadingCycle /> 正在跳转
-              </div>
-            </Button>
-            <span class="text-2xl cursor-default select-none"
-              >&nbsp;&nbsp;&nbsp;/</span
-            ><Dialog>
-              <DialogTrigger as-child>
-                <Button
-                  :disabled="loading"
-                  class="flex gap-1 items-center"
-                  variant="link"
-                >
-                  <Icon
-                    name="mdi:cellphone-screenshot"
-                    class="size-4"
-                  />截图扫码加入</Button
-                >
-              </DialogTrigger>
-              <DialogContent
-                class="sm:max-w-[425px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]"
-              >
-                <DialogHeader class="p-6 pb-0">
-                  <DialogTitle>原图</DialogTitle>
-                  <DialogDescription>
-                    本图可以将其保存到手机相册，然后使用微信扫一扫功能加入，PC直接拿手机扫码也可以
-                  </DialogDescription>
-                </DialogHeader>
-                <div class="grid gap-4 py-4 overflow-y-auto px-6">
-                  <img :src="data?.qrcode" alt="QR Code" class="w-full" />
+          <CardContent class="flex flex-col flex-auto w-full gap-8">
+            <div
+              v-if="isWechat"
+              class="flex flex-col items-center gap-4 justify-center"
+            >
+              <span class="text-sm">微信需要扫码加入，请长按二维码扫码</span>
+              <AppQRCode
+                v-if="data?.link"
+                class="p-2 border-2 rounded-3xl shadow-md"
+                :data="data?.link"
+              />
+            </div>
+            <div class="flex flex-row flex-auto w-full gap-2">
+              <Button
+                :disabled="loading"
+                variant="default"
+                @click="jumpToWechat"
+                ><div v-if="!loading" class="flex gap-1 items-center">
+                  <Icon name="mdi:exit-run" class="size-4" />火速入场
                 </div>
-              </DialogContent>
-            </Dialog>
+                <div v-else class="flex gap-1 items-center">
+                  <LoadingCycle /> 正在跳转
+                </div>
+              </Button>
+              <span class="text-2xl cursor-default select-none"
+                >&nbsp;&nbsp;&nbsp;/</span
+              ><Dialog>
+                <DialogTrigger as-child>
+                  <Button
+                    :disabled="loading"
+                    class="flex gap-1 items-center"
+                    variant="link"
+                  >
+                    <Icon
+                      name="mdi:cellphone-screenshot"
+                      class="size-4"
+                    />截图扫码加入</Button
+                  >
+                </DialogTrigger>
+                <DialogContent
+                  class="sm:max-w-[425px] grid-rows-[auto_minmax(0,1fr)_auto] p-0 max-h-[90dvh]"
+                >
+                  <DialogHeader class="p-6 pb-0">
+                    <DialogTitle>原图</DialogTitle>
+                    <DialogDescription>
+                      本图可以将其保存到手机相册，然后使用微信扫一扫功能加入，PC直接拿手机扫码也可以
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div class="grid gap-4 py-4 overflow-y-auto px-6">
+                    <img :src="data?.qrcode" alt="QR Code" class="w-full" />
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
           </CardContent>
           <CardFooter>
             <span class="text-sm flex flex-row"
