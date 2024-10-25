@@ -43,6 +43,8 @@ const props = defineProps<{
   data: WechatGroup[]
 }>()
 
+preloadComponents('WechatTablesDataTableDropdown')
+
 const sorting = ref<SortingState>([])
 const columnFilters = ref<ColumnFiltersState>([])
 const columnVisibility = ref<VisibilityState>({})

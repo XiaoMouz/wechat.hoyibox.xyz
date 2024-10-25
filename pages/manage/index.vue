@@ -7,6 +7,8 @@ import { columns } from '~/components/wechat/Tables/columns'
 import { useWechatStore } from '~/store/group'
 import type { WechatGroup } from '~/types/wechat-group.type'
 
+preloadComponents('WechatDialogForm')
+
 definePageMeta({
   title: '后台',
   middleware: 'auth',

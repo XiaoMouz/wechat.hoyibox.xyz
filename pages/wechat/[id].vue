@@ -12,6 +12,9 @@ useHead({
   ],
 })
 
+preloadComponents('LoadingCycle')
+preloadComponents('Icon')
+
 const route = useRoute()
 const id = route.params.id
 const router = useRouter()

@@ -13,6 +13,10 @@ useHead({
     },
   ],
 })
+preloadRouteComponents('/login')
+preloadRouteComponents('/logout')
+preloadRouteComponents('/manage')
+preloadRouteComponents('/settings')
 </script>
 <template>
   <div
