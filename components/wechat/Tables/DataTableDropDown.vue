@@ -55,7 +55,7 @@ const deleteItem = async () => {
 const qrcodeDialogStatu = ref(false)
 
 const copyURL = () => {
-  navigator.clipboard.writeText(`https://${location.host}/wechat/${group.id}`)
+  navigator.clipboard.writeText(`https://${location.host}/link/${group.id}`)
   toast({
     title: '已复制',
     description: '链接已经复制到剪贴板',
@@ -64,7 +64,7 @@ const copyURL = () => {
 
 const copyBase64 = () => {
   const bnase64 = qrcode.encodeAsBase64(
-    `https://${location.host}/wechat/${group.id}`
+    `https://${location.host}/link/${group.id}`
   )
   navigator.clipboard.writeText(bnase64)
   toast({
@@ -75,7 +75,7 @@ const copyBase64 = () => {
 
 const downloadImage = () => {
   const bnase64 = qrcode.encodeAsBase64(
-    `https://${location.host}/wechat/${group.id}`
+    `https://${location.host}/link/${group.id}`
   )
   const a = document.createElement('a')
   a.href = bnase64

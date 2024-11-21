@@ -66,7 +66,7 @@ function jumpToWechat() {
 }
 
 function copyURL() {
-  navigator.clipboard.writeText(`https://${location.host}/wechat/${id}`)
+  navigator.clipboard.writeText(`https://${location.host}/link/${id}`)
   toast({
     title: '已复制',
     description: '链接已经复制到剪贴板',
