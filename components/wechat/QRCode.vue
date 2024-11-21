@@ -11,9 +11,7 @@ export default {
   setup(props) {
     return () =>
       h('img', {
-        src: qrcode.encodeAsBase64(
-          `https://${location.host}/wechat/${props.id}`
-        ),
+        src: qrcode.encodeAsBase64(`https://${location.host}/link/${props.id}`),
         alt: 'QR Code',
       })
   },
