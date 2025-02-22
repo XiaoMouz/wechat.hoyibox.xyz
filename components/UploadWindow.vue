@@ -81,6 +81,8 @@ const uploadFiles = (files: any) => {
     if (result) {
       emit('decoded', result)
     } else {
+      isUploading.value = false
+      message.value = '正在识别二维码...'
       const imageData: ImageData = await new Promise((res) => {
         const image = new Image();
         image.src = URL.createObjectURL(files[0]);
@@ -104,6 +106,8 @@ const uploadFiles = (files: any) => {
           variant: 'destructive',
         })
       }
+      isUploading.value = false
+      message.value = '完成'
     }
   })
 
