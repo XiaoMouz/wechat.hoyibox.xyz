@@ -1,28 +1,13 @@
 <template>
   <div
     class="border relative border-dashed border-foreground transition-all duration-300 rounded-md p-4 text-center cursor-pointer py-8 hover:bg-shadow"
-    @dragover.prevent="onDragOver"
-    @dragleave="onDragLeave"
-    @drop.prevent="onDrop"
-    @click="triggerFileInput"
-  >
-    <input
-      type="file"
-      ref="fileInput"
-      @change="onFileChange"
-      style="display: none"
-      multiple
-    />
+    @dragover.prevent="onDragOver" @dragleave="onDragLeave" @drop.prevent="onDrop" @click="triggerFileInput">
+    <input type="file" ref="fileInput" @change="onFileChange" style="display: none" multiple />
     <div class="text-sm flex flex-col items-center gap-1 relative">
       <div
-        class="flex w-10 h-10 items-center justify-center rounded-full transition duration-300 cursor-pointer hover:bg-slate-400 dark:hover:bg-gray-400 fill-gray-900 dark:fill-slate-100 ease-in-out"
-      >
+        class="flex w-10 h-10 items-center justify-center rounded-full transition duration-300 cursor-pointer hover:bg-slate-400 dark:hover:bg-gray-400 fill-gray-900 dark:fill-slate-100 ease-in-out">
         <Transition name="slide">
-          <Icon
-            v-if="!isUploading"
-            name="mdi:cloud-upload-outline"
-            class="size-8 absolute"
-          />
+          <Icon v-if="!isUploading" name="mdi:cloud-upload-outline" class="size-8 absolute" />
           <Icon v-else name="mdi:progress-upload" class="size-8 absolute" />
         </Transition>
       </div>
@@ -42,6 +27,8 @@ import { ref, type VNodeRef } from 'vue'
 import type { UploadWindowType } from './wechat/GroupForm.vue'
 import { useToast } from './ui/toast'
 import qrcode from 'tc-qrcode'
+import { scan } from 'qr-scanner-wechat'
+
 
 const { toast } = useToast()
 
@@ -89,9 +76,34 @@ const uploadFiles = (files: any) => {
   isUploading.value = true
   const totalFiles = files.length
   let uploadedFiles = 0
-  qrcode.decodeFromFile(files[0]).then((result) => {
+
+  qrcode.decodeFromFile(files[0]).then(async (result) => {
     if (result) {
       emit('decoded', result)
+    } else {
+      const imageData: ImageData = await new Promise((res) => {
+        const image = new Image();
+        image.src = URL.createObjectURL(files[0]);
+
+        image.onload = () => {
+          const { naturalWidth: width, naturalHeight: height } = image;
+          const canvas = new OffscreenCanvas(width, height);
+          const ctx = canvas.getContext("2d");
+          if (!ctx) throw new Error("OffscreenCanvas is not supported");
+          ctx.drawImage(image, 0, 0);
+          res(ctx.getImageData(0, 0, width, height));
+        };
+      });
+      const res = await scan(imageData)
+      if (res.text) {
+        emit('decoded', res.text)
+      } else {
+        toast({
+          title: '未识别到二维码',
+          description: '可以尝试裁切图片后重新上传',
+          variant: 'destructive',
+        })
+      }
     }
   })
 

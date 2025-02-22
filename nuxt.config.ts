@@ -24,9 +24,11 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    authSecret: Math.random().toString(36).substring(2),
-    rimoPasskey: Math.random().toString(36).substring(2),
-    domain: 'localhost:3000',
+    authSecret:
+      process.env.NUXT_AUTH_SECRET || Math.random().toString(36).substring(2),
+    rimoPasskey:
+      process.env.NUXT_RIMO_PASSKEY || Math.random().toString(36).substring(2),
+    domain: process.env.NUXT_DOMAIN || 'localhost:3000',
   },
   icon: {
     customCollections: [
@@ -39,16 +41,12 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       kv: {
-        driver: 'netlifyBlobs',
-        name: 'kv',
-        siteID: process.env.NETLIFY_SITE_ID,
-        token: process.env.NETLIFY_TOKEN,
+        driver: 'fs',
+        base: './.nitro/db',
       },
       blob: {
-        driver: 'netlifyBlobs',
-        name: 'blob',
-        siteID: process.env.NETLIFY_SITE_ID,
-        token: process.env.NETLIFY_TOKEN,
+        driver: 'fs',
+        base: './.nitro/blob',
       },
     },
     devStorage: {
