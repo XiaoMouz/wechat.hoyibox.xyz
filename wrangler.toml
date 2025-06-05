@@ -1,0 +1,5 @@
+name = "link-forward"
+
+routes = [
+    { pattern = "link.mou.best", custom_domain = true },
+]
