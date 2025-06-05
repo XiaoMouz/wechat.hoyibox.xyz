@@ -41,12 +41,12 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       kv: {
-        driver: 'fs',
-        base: './.nitro/db',
+        driver:'cloudflare-kv-binding',
+        binding: 'LINK_FORWARD_KV',
       },
       blob: {
-        driver: 'fs',
-        base: './.nitro/blob',
+        driver: 'cloudflare-r2-binding',
+        binding: 'LINK_FORWARD_BLOB'
       },
     },
     devStorage: {

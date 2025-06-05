@@ -3,3 +3,11 @@ name = "link-forward"
 routes = [
     { pattern = "link.mou.best", custom_domain = true },
 ]
+
+[[kv_namespaces]]
+binding = "LINK_FORWARD_KV"
+id = "8723c082b137461a96baa021bdf86f4a"
+
+[[r2_buckets]]
+binding = "LINK_FORWARD_BLOB"
+bucket_name = "link-forward-blob"
