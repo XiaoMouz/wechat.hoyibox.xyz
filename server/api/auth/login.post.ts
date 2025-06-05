@@ -1,5 +1,5 @@
 import z from 'zod'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jose'
 
 //export const refreshTokens: Record<number, Record<string, any>> = {};
 export const SECRET = useRuntimeConfig().authSecret
@@ -34,9 +34,10 @@ export default defineEventHandler(async (event) => {
     picture: '/rimo.jpg',
   }
 
-  const accessToken = jwt.sign({ ...user }, SECRET, {
-    expiresIn,
-  })
+  const accessToken = await new jwt.SignJWT({ ...user })
+  .setProtectedHeader({ alg:'HS256' })
+  .setExpirationTime(expiresIn)
+  .sign(new TextEncoder().encode(SECRET))
   //set username to cookie
   setCookie(event, 'username', 'RimoOvO', {
     maxAge: 60 * 60 * 24 * 7,

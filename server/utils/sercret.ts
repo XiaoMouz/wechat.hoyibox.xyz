@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jose'
 import { H3Event } from 'h3'
 
-const SECRET = useRuntimeConfig().authSecret
+const SECRET_STRING = useRuntimeConfig().authSecret
 
 export const hash = (password: string) => {
   return bcrypt.hashSync(password, 10)
@@ -21,7 +21,8 @@ export const ensureAuth = async (event: H3Event) => {
   const extractedToken = authCookieValue
 
   try {
-    const decoded = jwt.verify(extractedToken, SECRET)
+    const SECRET = new TextEncoder().encode(SECRET_STRING)
+    const decoded = await (await jwt.jwtVerify(extractedToken, SECRET)).payload
     if (typeof decoded !== 'object') {
       return false
     }
