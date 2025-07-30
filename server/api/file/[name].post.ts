@@ -1,4 +1,4 @@
-import { setValue } from '~/server/model/blob'
+import { setItem } from '~/server/model/blob'
 import { ensureAuth } from '~/server/utils/sercret'
 
 export default eventHandler(async (event) => {
@@ -32,7 +32,7 @@ export default eventHandler(async (event) => {
 
   blob.arrayBuffer().then(async (arrayBuffer) => {
     const buffer = Buffer.from(arrayBuffer)
-    await setValue(name, buffer)
+    await setItem(name, buffer)
   })
   return {
     message: 'Success',

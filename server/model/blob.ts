@@ -5,7 +5,7 @@ export async function getItem<T extends StorageValue>(key: string) {
   const result = await storage.getItemRaw<T>(key)
   return result
 }
-export async function setValue(key: string, value: StorageValue) {
+export async function setItem(key: string, value: StorageValue) {
   const storage = useStorage('blob')
   await storage.setItemRaw(key, value)
 }
