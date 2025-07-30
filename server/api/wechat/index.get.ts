@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     }
   }
   const storage = useStorage('kv')
-  const list = await storage.getKeys()
+  const list:string[] = await storage.getKeys()
   const schema = z.object({
     offset: z.number().optional(),
   })

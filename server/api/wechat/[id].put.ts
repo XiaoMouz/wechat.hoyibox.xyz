@@ -49,7 +49,7 @@ export default eventHandler(async (event) => {
       error: 'Not Found',
     }
   }
-  setValue(id, body.data)
+  await setValue(id, body.data)
   return {
     message: 'Success',
     data: body.data,
